@@ -1,0 +1,27 @@
+{
+  "name": "askme",
+  "version": "0.0.1",
+  "description": "Askme Frontend",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fajaralfa/askme.git"
+  },
+  "author": "FajarAlfa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fajaralfa/askme/issues"
+  },
+  "homepage": "https://github.com/fajaralfa/askme#readme",
+  "dependencies": {
+    "vue": "^3.4.27"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.11",
+    "vitest": "^1.6.0"
+  }
+}
