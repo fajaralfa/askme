@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- if development -->
-    {{if .Development}}
+    {{if eq .ENVIRONMENT "development"}}
     <script type="module" src="http://localhost:5173/@vite/client"></script>
     <script type="module" src="http://localhost:5173/web/main.js"></script>
-    {{else}}
+    {{else if eq .ENVIRONMENT "production"}}
     <!-- if production -->
     {{range $_, $e := .CssFiles}}<link rel="stylesheet" href="/dist/{{ $e }}" />{{end}}
     <script type="module" src="/dist/{{ .JsFile }}"></script>
