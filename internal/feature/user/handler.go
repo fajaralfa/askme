@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strings"
+
+	"github.com/gorilla/mux"
 )
 
 var userRepo userInterface = repo{}
@@ -27,10 +28,9 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func FindHandler(w http.ResponseWriter, r *http.Request) {
-	segments := strings.Split(r.URL.Path, "/")
-	id := segments[4]
+	vars := mux.Vars(r)
 
-	user, err := userRepo.Find(id)
+	user, err := userRepo.Find(vars["id"])
 	if err != nil {
 		fmt.Println("Error while querying", err)
 	}
