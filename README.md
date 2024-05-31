@@ -1,5 +1,9 @@
 # ASKME
 
+DESC:
+
+YOU KNOW WHAT IT IS
+
 ## API
 
 REST API Design (Kemungkinan berubah - ubah).
@@ -10,6 +14,44 @@ REST API Design (Kemungkinan berubah - ubah).
 // header
 {
     "Content-Type": "application/json"
+}
+```
+
+### POST /api/v1/register
+
+Register
+
+- REQUEST
+
+```json
+// body
+{
+    "email": string,
+    "password": string
+}
+```
+
+- 200 OK
+
+```json
+{
+    "status": "success",
+    "data": null,
+    "message": "register berhasil, silakan login"
+}
+```
+
+- 401 UNAUTHORIZED
+
+```json
+// body
+{
+    "status": "fail",
+    "data": {
+        "email": "email sudah digunakan",
+        "password": "password kurang dari 8 karakter"
+    },
+    "message": "register gagal",
 }
 ```
 
@@ -32,8 +74,10 @@ Login
 ```json
 // body
 {
-    "accessToken": string, // encoded jwt
-    "expireIn": int // time in second
+    "status": "success",
+    "data": {
+        "accessToken": string, // encoded jwt
+    }
 }
 ```
 
@@ -42,46 +86,8 @@ Login
 ```json
 // body
 {
-    "error": {
-        "messages": [
-            "email atau password salah"
-        ]
-    }
-}
-```
-
-### POST /api/v1/register
-
-Register
-
-- REQUEST
-
-```json
-// body
-{
-    "email": string,
-    "password": string,
-    "photo": file|null, // optional
-}
-```
-
-- 200 OK
-
-```json
-{}
-```
-
-- 401 UNAUTHORIZED
-
-```json
-// body
-{
-    "error": {
-        "messages": [
-            "password kurang dari 8 karakter",
-            "email telah digunakan",
-        ]
-    }
+    "status": "fail",
+    "message": "email atau password salah"
 }
 ```
 
@@ -103,13 +109,16 @@ Get all questions asked to current authenticated user
 ```json
 // body
 {
-    "questions": [
-        {
-            "id": int,
-            "date": date,
-            "text": string
-        }
-    ],
+    "status": "success",
+    "data": {
+        "questions": [
+            {
+                "id": int,
+                "date": date,
+                "text": string
+            }
+        ],
+    }
 }
 ```
 
@@ -117,11 +126,8 @@ Get all questions asked to current authenticated user
 
 ```json
 {
-    "error": {
-        "messages": [
-            "anda belum masuk!"
-        ]
-    }
+    "status": "fail",
+    "message": "anda belum masuk!"
 }
 ```
 
@@ -142,10 +148,13 @@ Get one question asked to current user
 
 ```json
 {
-    "question": {
-        "id": int,
-        "date": date,
-        "text": string,
+    "status": "success",
+    "data": {
+        "question": {
+            "id": int,
+            "date": date,
+            "text": string,
+        }
     }
 }
 ```
@@ -154,12 +163,8 @@ Get one question asked to current user
 
 ```json
 {
-    "error": {
-        "messages": [
-            "anda belum masuk!",
-            "pertanyaan ini ditanyakan ke orang lain!",
-        ]
-    }
+    "status": "fail",
+    "message": "anda belum masuk!"|"pertanyaan ini ditanyakan ke orang lain!"
 }
 ```
 
@@ -172,10 +177,13 @@ Get user data with email {email}
 ```json
 // body
 {
-    "user": {
-        "email": string,
-        "photo": string,
-    }
+    "status": "success",
+    "data": {
+        "user": {
+            "email": string,
+            "photo": string,
+        }
+    },
 }
 ```
 
@@ -184,11 +192,8 @@ Get user data with email {email}
 ```json
 // body
 {
-    "error": {
-        "messages": [
-            "pengguna tidak ditemukan!"
-        ]
-    }
+    "status": "fail",
+    "message": "pengguna tidak ditemukan!"
 }
 ```
 
@@ -211,15 +216,18 @@ Send a question to target user
 ```json
 // body
 {
-    "question": {
-        "id": int,
-        "date": date,
-        "text": string,
-    },
-    "user": {
-        "email": string,
-        "photo": string,
-    },
+    "status": "success",
+    "data": {
+        "question": {
+            "id": int,
+            "date": date,
+            "text": string,
+        },
+        "user": {
+            "email": string,
+            "photo": string,
+        }
+    }
 }
 ```
 
@@ -228,10 +236,7 @@ Send a question to target user
 ```json
 // body
 {
-    "error": {
-        "messages": [
-            "pengguna tidak ditemukan!"
-        ]
-    }
+    "status": "fail",
+    "message": "pengguna tidak ditemukan!"
 }
 ```
