@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/fajaralfa/askme/internal/router"
 	"github.com/joho/godotenv"
@@ -15,8 +17,11 @@ func main() {
 	}
 
 	r := router.Create()
-	err = http.ListenAndServe(":8080", r)
+	port := os.Getenv("PORT")
+	log.Printf("Starting server on port %v\n", port)
+	err = http.ListenAndServe(fmt.Sprintf(":%v", port), r)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 }
