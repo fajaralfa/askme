@@ -35,3 +35,7 @@ func ApiBadRequestErr(w http.ResponseWriter, message string, data map[string]str
 func ApiUnauthorizedErr(w http.ResponseWriter, message string, data map[string]string) {
 	ApiErr(w, "fail", message, data, http.StatusUnauthorized)
 }
+
+func ApiNotFoundErr(w http.ResponseWriter, message string) {
+	ApiErr(w, "fail", message, nil, http.StatusNotFound)
+}
