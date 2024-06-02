@@ -31,7 +31,7 @@ func (q *Question) AskQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if targetUser == nil {
-		ApiErr(w, "fail", "user dengan email tidak ada", nil, 404)
+		ApiNotFoundErr(w, "pengguna dengan email ini tidak ditemukan")
 		return
 	}
 
@@ -95,7 +95,7 @@ func (q *Question) RemoveAssociatedWithUser(w http.ResponseWriter, r *http.Reque
 	}
 
 	if affected == 0 {
-		ApiNotFoundErr(w, "pertanyaan ini tidak ditanyakan ke kamu, maaf aja ya")
+		ApiUnauthorizedErr(w, "pertanyaan ini tidak ditanyakan ke kamu, maaf aja ya", nil)
 		return
 	}
 
