@@ -1,12 +1,13 @@
-package hash
+package service_test
 
 import (
-	"encoding/base64"
 	"strings"
 	"testing"
 
-	"github.com/fajaralfa/askme/internal/service/hash"
+	hp "github.com/fajaralfa/askme/internal/service/hash"
 )
+
+var hash hp.Hash = hp.Hash{}
 
 func TestMakeHash(t *testing.T) {
 	text := "rahasia"
@@ -15,8 +16,6 @@ func TestMakeHash(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	t.Log("derived key:", dk)
-	t.Log("derived key length:", len(dk))
 	if !strings.Contains(dk, "$") {
 		t.Fatal("hashed result format wrong:", dk)
 	}
@@ -25,12 +24,6 @@ func TestMakeHash(t *testing.T) {
 func TestVerifyHashSuccess(t *testing.T) {
 	password := "rahasia"
 	dk, _ := hash.Make(password)
-
-	salt := strings.Split(dk, "$")[0]
-	saltBytes, _ := base64.RawStdEncoding.DecodeString(salt)
-	t.Log("salt:", saltBytes)
-	t.Log("derived key:", dk)
-
 	if hash.Verify(password, dk) != true {
 		t.Fatal("Hash result not match")
 	}

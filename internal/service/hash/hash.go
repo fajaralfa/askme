@@ -10,8 +10,10 @@ import (
 )
 
 // dk is derived key
+type Hash struct {
+}
 
-func makeWithSalt(text string, salt []byte) string {
+func (h *Hash) makeWithSalt(text string, salt []byte) string {
 	dk := argon2.Key([]byte(text), salt, 1, 64*1024, 4, 32)
 
 	b64salt := base64.RawStdEncoding.EncodeToString(salt)
@@ -21,21 +23,21 @@ func makeWithSalt(text string, salt []byte) string {
 	return result
 }
 
-func Make(text string) (string, error) {
+func (h *Hash) Make(text string) (string, error) {
 	salt := make([]byte, 8)
 	_, err := rand.Read(salt)
 	if err != nil {
 		return "", err
 	}
 
-	dk := makeWithSalt(text, salt)
+	dk := h.makeWithSalt(text, salt)
 	return dk, nil
 }
 
-func Verify(text, savedDk string) bool {
+func (h *Hash) Verify(text, savedDk string) bool {
 	salt := strings.Split(savedDk, "$")[0]
 	saltBytes, _ := base64.RawStdEncoding.DecodeString(salt)
 
-	currentDk := makeWithSalt(text, saltBytes)
+	currentDk := h.makeWithSalt(text, saltBytes)
 	return currentDk == savedDk
 }
