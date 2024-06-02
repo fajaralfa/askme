@@ -1,21 +1,42 @@
 package router
 
 import (
-	"github.com/fajaralfa/askme/internal/feature/spa"
-	"github.com/fajaralfa/askme/internal/feature/user"
-	"github.com/fajaralfa/askme/internal/middleware"
+	"net/http"
+
+	"github.com/fajaralfa/askme/internal/handler"
+	"github.com/fajaralfa/askme/internal/helper"
+	mw "github.com/fajaralfa/askme/internal/middleware"
+	"github.com/fajaralfa/askme/internal/repo"
+	"github.com/fajaralfa/askme/internal/service/db"
+	hfunc "github.com/fajaralfa/askme/internal/service/hash"
 	"github.com/gorilla/mux"
 )
 
 func Create() *mux.Router {
 	router := mux.NewRouter()
 
-	api := router.PathPrefix("/api/v1").Subrouter()
-	api.Use(middleware.Api)
-	api.HandleFunc("/users", user.GetHandler)
-	api.HandleFunc("/users/{id:[0-9]+}", user.FindHandler)
+	// dependency creation
+	dbConn := db.Connect()
+	hashFunc := hfunc.Hash{}
+	userRepo := &repo.User{Db: dbConn}
+	qRepo := &repo.Question{Db: dbConn}
+	authHr := &handler.Auth{UserRepo: userRepo, Hash: hashFunc}
+	userHr := &handler.User{UserRepo: userRepo}
+	qHr := &handler.Question{QRepo: qRepo, UserRepo: userRepo}
 
-	router.PathPrefix("/").HandlerFunc(spa.SpaHandler)
+	// api routes
+	api := router.PathPrefix("/api/v1").Subrouter()
+	api.Use(mw.Api)
+	api.Methods("POST").Path("/register").HandlerFunc(authHr.Register)
+	api.Methods("POST").Path("/login").HandlerFunc(authHr.Login)
+	api.Methods("POST").Path("/questions").HandlerFunc(qHr.AskQuestion)
+	api.Methods("GET").Path("/questions").Handler(helper.Middlewares(http.HandlerFunc(qHr.FindAllAssociatedWithUser), mw.Authenticated))
+	api.Methods("DELETE").Path("/questions/{id:[0-9]+}").Handler(helper.Middlewares(http.HandlerFunc(qHr.RemoveAssociatedWithUser), mw.Authenticated))
+	api.Methods("GET").Path("/users/{email:[!-~]+}").HandlerFunc(userHr.FindByEmail)
+
+	// page routes
+	router.Use(mw.PathLogger)
+	router.PathPrefix("/").HandlerFunc(handler.SpaHandler)
 
 	return router
 }
