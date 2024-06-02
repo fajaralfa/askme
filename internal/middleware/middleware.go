@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/fajaralfa/askme/internal/handler"
@@ -18,7 +19,7 @@ func Authenticated(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		tokenString := r.Header.Get("Authorization")
 		if tokenString == "" {
-			handler.ApiUnauthorizedErr(w, "missing authorization header", nil)
+			handler.ApiUnauthorizedErr(w, "anda belum masuk!", nil)
 			return
 		}
 		tokenString = tokenString[len("Bearer "):]
@@ -30,5 +31,12 @@ func Authenticated(next http.Handler) http.Handler {
 		}
 
 		handler.ApiUnauthorizedErr(w, "auth token invalid", nil)
+	})
+}
+
+func PathLogger(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.URL)
+		next.ServeHTTP(w, r)
 	})
 }
