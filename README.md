@@ -6,12 +6,12 @@ YOU KNOW WHAT IT IS
 
 ## API
 
-REST API Design (Kemungkinan berubah - ubah).
+masih bisa berubah.
 
 - Global request / response
 
+header
 ```json
-// header
 {
     "Content-Type": "application/json"
 }
@@ -23,11 +23,11 @@ Register
 
 - REQUEST
 
+body
 ```json
-// body
 {
-    "email": string,
-    "password": string
+    "email": "example@email.com",
+    "password": "rahasia"
 }
 ```
 
@@ -36,22 +36,19 @@ Register
 ```json
 {
     "status": "success",
-    "data": null,
-    "message": "register berhasil, silakan login"
+    "data": null
 }
 ```
 
 - 401 UNAUTHORIZED
 
 ```json
-// body
 {
     "status": "fail",
-    "data": {
-        "email": "email sudah digunakan",
-        "password": "password kurang dari 8 karakter"
-    },
     "message": "register gagal",
+    "data": {
+        "email": "email sudah digunakan"
+    }
 }
 ```
 
@@ -62,21 +59,19 @@ Login
 - REQUEST
 
 ```json
-// body
 {
-    "email": string,
-    "password": string,
+    "email": "example@email.com",
+    "password": "rahasia"
 }
 ```
 
 - 200 OK
 
 ```json
-// body
 {
     "status": "success",
     "data": {
-        "accessToken": string, // encoded jwt
+        "accessToken": "base.64.jwt"
     }
 }
 ```
@@ -87,84 +82,8 @@ Login
 // body
 {
     "status": "fail",
-    "message": "email atau password salah"
-}
-```
-
-### GET /api/v1/questions
-
-Get all questions asked to current authenticated user
-
-- REQUEST
-
-```json
-// header
-{
-    "Authorization": "Bearer {accessToken}"
-}
-```
-
-- 200 OK
-
-```json
-// body
-{
-    "status": "success",
-    "data": {
-        "questions": [
-            {
-                "id": int,
-                "date": date,
-                "text": string
-            }
-        ],
-    }
-}
-```
-
-- 401 UNAUTHORIZED
-
-```json
-{
-    "status": "fail",
-    "message": "anda belum masuk!"
-}
-```
-
-### GET /api/v1/questions/{id}
-
-Get one question asked to current user
-
-- REQUEST
-
-```json
-// header
-{
-    "Authorization": "Bearer {accessToken}"
-}
-```
-
-- 200 OK
-
-```json
-{
-    "status": "success",
-    "data": {
-        "question": {
-            "id": int,
-            "date": date,
-            "text": string,
-        }
-    }
-}
-```
-
-- 401 UNAUTHORIZED
-
-```json
-{
-    "status": "fail",
-    "message": "anda belum masuk!"|"pertanyaan ini ditanyakan ke orang lain!"
+    "message": "email atau password salah",
+    "data": null
 }
 ```
 
@@ -180,8 +99,9 @@ Get user data with email {email}
     "status": "success",
     "data": {
         "user": {
-            "email": string,
-            "photo": string,
+            "id": 1,
+            "email": "example@email.com",
+            "photo": "imagename.jpeg",
         }
     },
 }
@@ -193,7 +113,8 @@ Get user data with email {email}
 // body
 {
     "status": "fail",
-    "message": "pengguna tidak ditemukan!"
+    "message": "pengguna tidak ditemukan!",
+    "data": null
 }
 ```
 
@@ -206,8 +127,8 @@ Send a question to target user
 ```json
 // body
 {
-    "question": string,
-    "userEmail": string,
+    "question": "pertanyaan?",
+    "targetEmail": "example@email.com",
 }
 ```
 
@@ -219,13 +140,10 @@ Send a question to target user
     "status": "success",
     "data": {
         "question": {
-            "id": int,
-            "date": date,
-            "text": string,
-        },
-        "user": {
-            "email": string,
-            "photo": string,
+            "id": 1,
+            "question": "pertanyaan",
+            "created_at": "datetime",
+            "user_id": 1
         }
     }
 }
@@ -237,6 +155,76 @@ Send a question to target user
 // body
 {
     "status": "fail",
-    "message": "pengguna tidak ditemukan!"
+    "message": "pengguna dengan email ini tidak ditemukan"
+}
+```
+
+### GET /api/v1/questions
+
+Get all questions asked to current authenticated user
+
+- REQUEST
+
+header
+```json
+{
+    "Authorization": "Bearer {accessToken}"
+}
+```
+
+- 200 OK
+
+```json
+{
+    "status": "success",
+    "data": {
+        "questions": [
+            {
+                "id": 1,
+                "question": "question?",
+                "created_at": "datetime",
+                "user_id": 1
+            }
+        ],
+    }
+}
+```
+
+- 401 UNAUTHORIZED
+
+```json
+{
+    "status": "fail",
+    "message": "anda belum masuk!",
+    "data": null
+}
+```
+
+### DELETE /api/v1/questions
+
+- REQUEST
+
+header
+```json
+{
+    "Authorization": "Bearer {accessToken}"
+}
+```
+
+- 200 OK
+
+```json
+{
+    "status": "success",
+    "data": null
+}
+```
+
+- 401 UNAUTHORIZED
+```json
+{
+  "status": "fail",
+  "message": "pertanyaan ini tidak ditanyakan ke kamu, maaf aja ya",
+  "data": null
 }
 ```
