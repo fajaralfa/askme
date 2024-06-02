@@ -33,3 +33,8 @@ func Parse(tokenString string) (*jwt.Token, error) {
 	})
 	return token, err
 }
+
+func ParseGetClaims(tokenString string) (*Claims, error) {
+	token, err := Parse(tokenString)
+	return token.Claims.(*Claims), err
+}
