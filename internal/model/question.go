@@ -1,8 +1,8 @@
 package model
 
 type Question struct {
-	Id     int64  `json:"id"`
-	Date   string `json:"date"`
-	Text   string `json:"text"`
-	UserId int64  `json:"user_id"`
+	Id        int64  `json:"id"`
+	Question  string `json:"question"`
+	CreatedAt string `json:"created_at"`
+	UserId    int64  `json:"user_id"`
 }
