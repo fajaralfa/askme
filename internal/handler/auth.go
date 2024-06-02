@@ -29,7 +29,7 @@ func (a *Auth) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if user != nil {
-		ApiBadRequestErr(w, "register gagal", map[string]string{"email": "email telah digunakan"})
+		ApiUnauthorizedErr(w, "register gagal", map[string]string{"email": "email telah digunakan"})
 		return
 	}
 
