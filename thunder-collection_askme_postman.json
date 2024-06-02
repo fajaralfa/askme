@@ -1,0 +1,618 @@
+{
+    "info": {
+        "_postman_id": "45fbdcbf-f7ac-405c-b9ed-431989b3141a",
+        "name": "askme",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "register 1",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/register",
+                    "path": [
+                        "api",
+                        "v1",
+                        "register"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"{{email1}}\",\n  \"password\": \"{{password1}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "login 1",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/login",
+                    "path": [
+                        "api",
+                        "v1",
+                        "login"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"{{email1}}\",\n  \"password\": \"{{password1}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "login invalid email",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/login",
+                    "path": [
+                        "api",
+                        "v1",
+                        "login"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"salah@salah.salah\",\n  \"password\": \"{{password1}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "login invalid password",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/login",
+                    "path": [
+                        "api",
+                        "v1",
+                        "login"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"{{email1}}\",\n  \"password\": \"salah\"\n}"
+                }
+            }
+        },
+        {
+            "name": "register email exist",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/register",
+                    "path": [
+                        "api",
+                        "v1",
+                        "register"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"{{email1}}\",\n  \"password\": \"{{password1}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "find user by email",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/api/v1/users/{{email1}}",
+                    "path": [
+                        "api",
+                        "v1",
+                        "users",
+                        "{{email1}}"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "get all questions to user 1",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{auth_token1}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "post 1st question to user 1",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"question\": \"{{question1_1}}\",\n  \"targetEmail\": \"{{email1}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "post 2nd question to user 1",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"question\": \"{{question1_2}}\",\n  \"targetEmail\": \"{{email1}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "remove 1 question user 1",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions/{{question_id_user_1}}",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions",
+                        "{{question_id_user_1}}"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{auth_token1}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "register 2",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/register",
+                    "path": [
+                        "api",
+                        "v1",
+                        "register"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"{{email2}}\",\n  \"password\": \"{{password2}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "login 2",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/login",
+                    "path": [
+                        "api",
+                        "v1",
+                        "login"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"email\": \"{{email2}}\",\n  \"password\": \"{{password2}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "post 1st question to user 2",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"question\": \"{{question2_1}}\",\n  \"targetEmail\": \"{{email2}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "post 2nd question to user 2",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"question\": \"{{question2_2}}\",\n  \"targetEmail\": \"{{email2}}\"\n}"
+                }
+            }
+        },
+        {
+            "name": "get all questions to user 2",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{auth_token2}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "remove 1 question at user 2 from user 1",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions/{{question_id_user_2}}",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions",
+                        "{{question_id_user_2}}"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                        {
+                            "key": "token",
+                            "value": "{{auth_token1}}",
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "find user by email not found",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/api/v1/users/salah@mail.com",
+                    "path": [
+                        "api",
+                        "v1",
+                        "users",
+                        "salah@mail.com"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "get all questions unauthorized",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "post question nonregistered user",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "localhost:8080/api/v1/questions",
+                    "path": [
+                        "api",
+                        "v1",
+                        "questions"
+                    ],
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"question\": \"nanya?\",\n  \"targetEmail\": \"takpernahada@email.com\"\n}"
+                }
+            }
+        }
+    ]
+}
