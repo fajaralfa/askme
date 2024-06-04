@@ -32,6 +32,7 @@ func Create() *mux.Router {
 	api.Methods("DELETE").Path("/questions/{id:[0-9]+}").Handler(helper.Middlewares(http.HandlerFunc(qHr.RemoveAssociatedWithUser), mw.Authenticated))
 	api.Methods("GET").Path("/users/{email:[!-~]+}").HandlerFunc(userHr.FindByEmail)
 	api.Methods("GET").Path("/me").HandlerFunc(userHr.CurrentUserInfo)
+	api.PathPrefix("/").HandlerFunc(handler.ApiNotFound)
 
 	// page routes
 	router.Use(mw.PathLogger)
