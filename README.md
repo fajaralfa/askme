@@ -87,14 +87,51 @@ Login
 }
 ```
 
-### GET /api/v1/user/{email}
+### GET /api/v1/me
+
+Get current logged in user info
+
+- REQUEST
+
+header
+
+```json
+{
+    "Authorization": "Bearer {accessToken}"
+}
+```
+
+- 200 OK
+
+```json
+{
+    "status": "success",
+    "data": {
+        "user": {
+            "id": 1,
+            "email": "example@email.com",
+            "photo": "hash.jpg"
+        }
+    }
+}
+```
+
+- 401 UNAUTHORIZED
+
+```json
+{
+    "status": "fail",
+    "message": "token invalid" | "anda belum login"
+}
+```
+
+### GET /api/v1/users/{email}
 
 Get user data with email {email}
 
 - 200 OK
 
 ```json
-// body
 {
     "status": "success",
     "data": {
@@ -110,7 +147,6 @@ Get user data with email {email}
 - 404 NOT FOUND
 
 ```json
-// body
 {
     "status": "fail",
     "message": "pengguna tidak ditemukan!",
@@ -125,7 +161,6 @@ Send a question to target user
 - REQUEST
 
 ```json
-// body
 {
     "question": "pertanyaan?",
     "targetEmail": "example@email.com",
@@ -135,7 +170,6 @@ Send a question to target user
 - 200 OK
 
 ```json
-// body
 {
     "status": "success",
     "data": {
@@ -152,7 +186,6 @@ Send a question to target user
 - 404 NOT FOUND
 
 ```json
-// body
 {
     "status": "fail",
     "message": "pengguna dengan email ini tidak ditemukan"
