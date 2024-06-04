@@ -12,7 +12,6 @@ import (
 
 type Auth struct {
 	UserRepo repo.UserInterface
-	Hash     hash.Hash
 }
 
 func (a *Auth) Register(w http.ResponseWriter, r *http.Request) {
@@ -33,7 +32,7 @@ func (a *Auth) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	payload.Password, err = a.Hash.Make(payload.Password)
+	payload.Password, err = hash.Make(payload.Password)
 	if err != nil {
 		ApiInternalErr(w, err)
 		return
@@ -65,7 +64,7 @@ func (a *Auth) Login(w http.ResponseWriter, r *http.Request) {
 		ApiInternalErr(w, err)
 		return
 	}
-	if user == nil || !a.Hash.Verify(payload.Password, user.Password) {
+	if user == nil || !hash.Verify(payload.Password, user.Password) {
 		ApiUnauthorizedErr(w, "email atau password salah", nil)
 		return
 	}
