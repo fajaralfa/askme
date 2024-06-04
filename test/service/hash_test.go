@@ -4,10 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	hp "github.com/fajaralfa/askme/internal/service/hash"
+	"github.com/fajaralfa/askme/internal/service/hash"
 )
-
-var hash hp.Hash = hp.Hash{}
 
 func TestMakeHash(t *testing.T) {
 	text := "rahasia"

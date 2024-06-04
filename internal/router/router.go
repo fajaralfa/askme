@@ -8,7 +8,6 @@ import (
 	mw "github.com/fajaralfa/askme/internal/middleware"
 	"github.com/fajaralfa/askme/internal/repo"
 	"github.com/fajaralfa/askme/internal/service/db"
-	hfunc "github.com/fajaralfa/askme/internal/service/hash"
 	"github.com/gorilla/mux"
 )
 
@@ -17,10 +16,9 @@ func Create() *mux.Router {
 
 	// dependency creation
 	dbConn := db.Connect()
-	hashFunc := hfunc.Hash{}
 	userRepo := &repo.User{Db: dbConn}
 	qRepo := &repo.Question{Db: dbConn}
-	authHr := &handler.Auth{UserRepo: userRepo, Hash: hashFunc}
+	authHr := &handler.Auth{UserRepo: userRepo}
 	userHr := &handler.User{UserRepo: userRepo}
 	qHr := &handler.Question{QRepo: qRepo, UserRepo: userRepo}
 

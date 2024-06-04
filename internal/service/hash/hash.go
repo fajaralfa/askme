@@ -9,11 +9,7 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-// dk is derived key
-type Hash struct {
-}
-
-func (h *Hash) makeWithSalt(text string, salt []byte) string {
+func makeWithSalt(text string, salt []byte) string {
 	dk := argon2.Key([]byte(text), salt, 1, 64*1024, 4, 32)
 
 	b64salt := base64.RawStdEncoding.EncodeToString(salt)
@@ -23,21 +19,21 @@ func (h *Hash) makeWithSalt(text string, salt []byte) string {
 	return result
 }
 
-func (h *Hash) Make(text string) (string, error) {
+func Make(text string) (string, error) {
 	salt := make([]byte, 8)
 	_, err := rand.Read(salt)
 	if err != nil {
 		return "", err
 	}
 
-	dk := h.makeWithSalt(text, salt)
+	dk := makeWithSalt(text, salt)
 	return dk, nil
 }
 
-func (h *Hash) Verify(text, savedDk string) bool {
+func Verify(text, savedDk string) bool {
 	salt := strings.Split(savedDk, "$")[0]
 	saltBytes, _ := base64.RawStdEncoding.DecodeString(salt)
 
-	currentDk := h.makeWithSalt(text, saltBytes)
+	currentDk := makeWithSalt(text, saltBytes)
 	return currentDk == savedDk
 }
