@@ -69,10 +69,15 @@ Login
 
 ```json
 {
-    "status": "success",
-    "data": {
-        "accessToken": "base.64.jwt"
+  "status": "success",
+  "data": {
+    "accessToken": "base64.encoded.jwt",
+    "user": {
+      "id": 1,
+      "email": "example@email.com",
+      "photo": ""
     }
+  }
 }
 ```
 

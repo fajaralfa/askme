@@ -75,9 +75,14 @@ func (a *Auth) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	user.Password = ""
+
 	resp := model.Response{
 		Status: "success",
-		Data:   model.JWT{AccessToken: token},
+		Data: map[string]any{
+			"user":        user,
+			"accessToken": token,
+		},
 	}
 	helper.WriteJSON(w, resp)
 }
