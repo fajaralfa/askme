@@ -23,7 +23,13 @@ func Authenticated(next http.Handler) http.Handler {
 			return
 		}
 		tokenString = tokenString[len("Bearer "):]
-		token, _ := jwt.Parse(tokenString)
+		token, err := jwt.Parse(tokenString)
+
+		if err != nil {
+			handler.ApiBadRequestErr(w, "auth token invalid", nil)
+			log.Println(err)
+			return
+		}
 
 		if token.Valid {
 			next.ServeHTTP(w, r)
