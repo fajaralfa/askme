@@ -4,6 +4,15 @@ DESC:
 
 YOU KNOW WHAT IT IS
 
+## ROADMAP
+
+- Api Auth ✅
+- Api Question Action ✅
+- Api Get User Info by Email ✅
+- Api Get Current User Info ✅
+- Api Profile Pic
+- Api Edit Profile
+
 ## API
 
 masih bisa berubah.
