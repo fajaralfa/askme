@@ -51,6 +51,31 @@ func (q *Question) AskQuestion(w http.ResponseWriter, r *http.Request) {
 	helper.WriteJSON(w, resp)
 }
 
+func (q *Question) FindAssociatedWithUser(w http.ResponseWriter, r *http.Request) {
+	claim, err := jwt.ParseGetClaims(r.Header.Get("Authorization")[len("Bearer "):])
+	if err != nil {
+		ApiInternalErr(w, err)
+		return
+	}
+
+	vars := mux.Vars(r)
+
+	question, err := q.QRepo.FindByUserEmail(vars["id"], claim.Email)
+	if err != nil {
+		ApiInternalErr(w, err)
+		return
+	}
+
+	resp := model.Response{
+		Status: "success",
+		Data: map[string]*model.Question{
+			"question": question,
+		},
+	}
+
+	helper.WriteJSON(w, resp)
+}
+
 func (q *Question) FindAllAssociatedWithUser(w http.ResponseWriter, r *http.Request) {
 	claim, err := jwt.ParseGetClaims(r.Header.Get("Authorization")[len("Bearer "):])
 	if err != nil {

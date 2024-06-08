@@ -29,6 +29,7 @@ func Create() *mux.Router {
 	api.Methods("POST").Path("/login").HandlerFunc(authHr.Login)
 	api.Methods("POST").Path("/questions").HandlerFunc(qHr.AskQuestion)
 	api.Methods("GET").Path("/questions").Handler(helper.Middlewares(http.HandlerFunc(qHr.FindAllAssociatedWithUser), mw.Authenticated))
+	api.Methods("GET").Path("/questions/{id:[0-9]+}").Handler(helper.Middlewares(http.HandlerFunc(qHr.FindAssociatedWithUser), mw.Authenticated))
 	api.Methods("DELETE").Path("/questions/{id:[0-9]+}").Handler(helper.Middlewares(http.HandlerFunc(qHr.RemoveAssociatedWithUser), mw.Authenticated))
 	api.Methods("GET").Path("/users/{email:[!-~]+}").HandlerFunc(userHr.FindByEmail)
 	api.Methods("GET").Path("/me").HandlerFunc(userHr.CurrentUserInfo)
@@ -36,6 +37,7 @@ func Create() *mux.Router {
 
 	// page routes
 	router.Use(mw.PathLogger)
+	router.PathPrefix("/dist").Handler(http.StripPrefix("/dist/", http.FileServer(http.Dir("./dist/"))))
 	router.PathPrefix("/").HandlerFunc(handler.SpaHandler)
 
 	return router

@@ -11,6 +11,7 @@ type QuestionInterface interface {
 	FindAllByUserEmail(userid string) ([]model.Question, error)
 	FindAllByUserId(userid string) ([]model.Question, error)
 	FindByUserId(qid, userid string) (*model.Question, error)
+	FindByUserEmail(qid, email string) (*model.Question, error)
 	Create(questionText string, userid int64) (*model.Question, error)
 	DeleteByQIdUserId(id, userid string) (int64, error)
 }
@@ -61,6 +62,24 @@ func (q *Question) FindAllByUserId(userid string) ([]model.Question, error) {
 		return nil, err
 	}
 	return questions, nil
+}
+
+func (q *Question) FindByUserEmail(qid, email string) (*model.Question, error) {
+	var question *model.Question
+	rows, err := q.Db.Query("SELECT questions.* FROM questions LEFT JOIN users ON user_id = users.id WHERE questions.id = ? AND email = ?", qid, email)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	if rows.Next() {
+		question = new(model.Question)
+		if err := rows.Scan(&question.Id, &question.Question, &question.CreatedAt, &question.UserId); err != nil {
+			return nil, err
+		}
+	}
+
+	return question, nil
 }
 
 func (q *Question) FindByUserId(qid, userid string) (*model.Question, error) {
