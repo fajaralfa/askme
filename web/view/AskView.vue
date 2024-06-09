@@ -17,7 +17,7 @@ async function getUser() {
     }
 }
 
-getUser()
+await getUser()
 
 </script>
 
