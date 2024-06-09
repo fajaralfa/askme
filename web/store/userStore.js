@@ -24,6 +24,7 @@ function get() {
 }
 
 function isLogin() {
+    get()
     return user.value.accessToken != null
 }
 
