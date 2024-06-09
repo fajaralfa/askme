@@ -14,10 +14,15 @@ type QuestionInterface interface {
 	FindByUserEmail(qid, email string) (*model.Question, error)
 	Create(questionText string, userid int64) (*model.Question, error)
 	DeleteByQIdUserId(id, userid string) (int64, error)
+	Seen(id string) (int64, error)
 }
 
 type Question struct {
 	Db *sql.DB
+}
+
+func rowScan(rows *sql.Rows, q *model.Question) error {
+	return rows.Scan(&q.Id, &q.Question, &q.CreatedAt, &q.Seen, &q.UserId)
 }
 
 func (q *Question) FindAllByUserEmail(email string) ([]model.Question, error) {
@@ -30,7 +35,7 @@ func (q *Question) FindAllByUserEmail(email string) ([]model.Question, error) {
 
 	for rows.Next() {
 		var question model.Question
-		if err := rows.Scan(&question.Id, &question.Question, &question.CreatedAt, &question.UserId); err != nil {
+		if err := rowScan(rows, &question); err != nil {
 			return nil, err
 		}
 		questions = append(questions, question)
@@ -52,7 +57,7 @@ func (q *Question) FindAllByUserId(userid string) ([]model.Question, error) {
 
 	for rows.Next() {
 		var question model.Question
-		if err := rows.Scan(&question.Id, &question.Question, &question.CreatedAt, &question.UserId); err != nil {
+		if err := rowScan(rows, &question); err != nil {
 			return nil, err
 		}
 		questions = append(questions, question)
@@ -74,7 +79,7 @@ func (q *Question) FindByUserEmail(qid, email string) (*model.Question, error) {
 
 	if rows.Next() {
 		question = new(model.Question)
-		if err := rows.Scan(&question.Id, &question.Question, &question.CreatedAt, &question.UserId); err != nil {
+		if err := rowScan(rows, question); err != nil {
 			return nil, err
 		}
 	}
@@ -92,7 +97,7 @@ func (q *Question) FindByUserId(qid, userid string) (*model.Question, error) {
 
 	if rows.Next() {
 		question = new(model.Question)
-		if err := rows.Scan(&question.Id, &question.Question, &question.CreatedAt, &question.UserId); err != nil {
+		if err := rowScan(rows, question); err != nil {
 			return nil, err
 		}
 	}
@@ -118,6 +123,12 @@ func (q *Question) Create(questionText string, userid int64) (*model.Question, e
 
 func (q *Question) DeleteByQIdUserId(id, userid string) (int64, error) {
 	res, err := q.Db.Exec("DELETE FROM questions WHERE id = ? and user_id = ?", id, userid)
+	affected, _ := res.RowsAffected()
+	return affected, err
+}
+
+func (q *Question) Seen(id string) (int64, error) {
+	res, err := q.Db.Exec("UPDATE questions SET seen = TRUE WHERE id = ?", id)
 	affected, _ := res.RowsAffected()
 	return affected, err
 }
