@@ -51,7 +51,7 @@ func (q *Question) AskQuestion(w http.ResponseWriter, r *http.Request) {
 	helper.WriteJSON(w, resp)
 }
 
-func (q *Question) FindAssociatedWithUser(w http.ResponseWriter, r *http.Request) {
+func (q *Question) SeeQuestion(w http.ResponseWriter, r *http.Request) {
 	claim, err := jwt.ParseGetClaims(r.Header.Get("Authorization")[len("Bearer "):])
 	if err != nil {
 		ApiInternalErr(w, err)
@@ -64,6 +64,14 @@ func (q *Question) FindAssociatedWithUser(w http.ResponseWriter, r *http.Request
 	if err != nil {
 		ApiInternalErr(w, err)
 		return
+	}
+
+	if question != nil {
+		_, err = q.QRepo.Seen(vars["id"])
+		if err != nil {
+			ApiInternalErr(w, err)
+			return
+		}
 	}
 
 	resp := model.Response{
