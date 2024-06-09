@@ -23,8 +23,11 @@ const router = createRouter({
 
 router.beforeEach((to) => {
     setLoading(true)
-    if (!isLogin() && !['login', 'register', 'ask'].find((v) => v == to.name) ) {
+    const notGuarded = ['login', 'register', 'ask']
+    if (!isLogin() && !notGuarded.find((v) => v == to.name) ) {
         return { name: 'login' }
+    } else if (isLogin() && notGuarded.find((v) => v == to.name)) {
+        return { name: 'home' }
     }
     document.title = to.meta.name || 'AskMe'
 })
