@@ -19,6 +19,8 @@ func SpaHandler(w http.ResponseWriter, r *http.Request) {
 
 	t.Execute(w, map[string]any{
 		"ENVIRONMENT": os.Getenv("ENVIRONMENT"),
+		"HOST":        os.Getenv("VITE_HOST"),
+		"PORT":        os.Getenv("VITE_PORT"),
 		"CssFiles":    manifest["web/main.js"]["css"],
 		"JsFile":      manifest["web/main.js"]["file"],
 	})
