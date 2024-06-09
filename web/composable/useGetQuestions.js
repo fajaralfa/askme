@@ -1,6 +1,6 @@
 import { ref } from "vue"
-import user from '@/store/user';
 import { fetchJSONWithAuth } from "@/helper/fetch";
+import * as user from '@/store/userStore'
 
 export default function useGetQuestions() {
     const questions = ref([])
@@ -8,7 +8,7 @@ export default function useGetQuestions() {
     const fetchStatus = ref("success")
     
     async function fetchQuestions() {
-        const {json} = await fetchJSONWithAuth('/api/v1/questions', user.value.accessToken)
+        const {json} = await fetchJSONWithAuth('/api/v1/questions', user.get().value.accessToken)
         fetchStatus.value = json.status
         if (json.status === 'success') {
             questions.value = json.data.questions

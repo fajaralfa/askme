@@ -1,16 +1,14 @@
 <script setup>
 import Nav from '@/component/Nav.vue';
-import useUserStore from '@/composable/useUserStore';
 import LogoutButton from '@/component/LogoutButton.vue'
-
-const user = useUserStore()
+import * as user from '@/store/userStore'
 
 const link = `${window.location.origin}/${user.get().value.email}`
 
 </script>
 
 <template>
-    <Nav></Nav>
+    <Nav />
     <LogoutButton />
     <div class="max-w-2xl m-auto">
         <div class="flex flex-col items-center gap-10 mt-28">

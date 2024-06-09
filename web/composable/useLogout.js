@@ -1,10 +1,9 @@
 import { ref } from "vue";
-import useUserStore from "./useUserStore";
+import * as user from '@/store/userStore'
 import { useRouter } from "vue-router";
 
 export default function useLogout() {
     const loading = ref(false)
-    const user = useUserStore()
     const router = useRouter()
 
     function submit() {

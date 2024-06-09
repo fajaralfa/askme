@@ -1,11 +1,10 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { fetchJSON } from '@/helper/fetch'
-import useUserStore from './useUserStore'
+import * as user from '@/store/userStore'
 
 export default function useLogin() {
     const router = useRouter()
-    const user = useUserStore()
 
     const form = ref({
         email: '',
