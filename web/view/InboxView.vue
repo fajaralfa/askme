@@ -40,5 +40,5 @@ async function seeQuestion(item) {
             </button>
         </div>
     </div>
-    <QuestionModal title="Ask Me Anything!" :question :see @see="(e) => see=e" />
+    <QuestionModal title="Ask Me Anything!" :question :show="see" @show="(e) => see=e" />
 </template>
