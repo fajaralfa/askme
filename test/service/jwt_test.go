@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreateJwt(t *testing.T) {
-	token, err := jwt.Create("fajaralfa@gmail.com")
+	token, err := jwt.Create(1, "fajaralfa@gmail.com")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -16,7 +16,7 @@ func TestCreateJwt(t *testing.T) {
 }
 
 func TestParseJwt(t *testing.T) {
-	tokenString, err := jwt.Create("fajaralfa@gmail.com")
+	tokenString, err := jwt.Create(1, "fajaralfa@gmail.com")
 	if err != nil {
 		t.Fatal(err)
 	}

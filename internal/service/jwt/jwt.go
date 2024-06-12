@@ -8,13 +8,15 @@ import (
 )
 
 type Claims struct {
-	Email string `json:"email"`
+	Email  string `json:"email"`
+	UserId int64  `json:"userId"`
 	jwt.RegisteredClaims
 }
 
-func Create(email string) (string, error) {
+func Create(userid int64, email string) (string, error) {
 	claims := Claims{
-		Email: email,
+		UserId: userid,
+		Email:  email,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(36 * time.Hour)),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),

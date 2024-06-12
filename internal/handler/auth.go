@@ -69,7 +69,7 @@ func (a *Auth) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err := jwt.Create(user.Email)
+	token, err := jwt.Create(user.Id, user.Email)
 	if err != nil {
 		ApiInternalErr(w, err)
 		return
