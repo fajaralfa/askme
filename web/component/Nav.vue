@@ -4,9 +4,13 @@ import { RouterLink } from 'vue-router';
 
 <template>
     <nav class="flex justify-center gap-10 p-6">
-        <RouterLink :to="{name: 'home'}" class="text-[rgba(0,0,0,0.3)]"
-            exactActiveClass="font-bold !text-black">PLAY</RouterLink>
-        <RouterLink :to="{name: 'inbox'}" class="text-[rgba(0,0,0,0.3)]"
-            exactActiveClass="font-bold !text-black">INBOX</RouterLink>
+        <RouterLink :to="{name: 'home'}"
+            class="text-white"
+            exactActiveClass="font-bold"
+            >PLAY</RouterLink>
+        <RouterLink :to="{name: 'inbox'}"
+            class="text-white"
+            exactActiveClass="font-bold"
+            >INBOX</RouterLink>
     </nav>
 </template>
