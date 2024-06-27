@@ -6,18 +6,22 @@ const { form, loading, errMessage, submit } = useRegister()
 </script>
 
 <template>
-    <div class="w-[100vw] h-[100vh] grid place-items-center fixed">
+    <div class="w-[100vw] h-[100vh] grid place-items-center fixed bg-gradient-to-br from-blue-300 to-blue-900">
         <div>
-            <RouterLink :to="{ name: 'login' }" class="underline text-blue-700 hover:text-blue-900">Login
-            </RouterLink>
-            <form class="mt-10">
+            <form>
                 <div class="bg-red-400 text-white px-3 py-1" v-if="errMessage">{{ errMessage }}</div>
-                <div class="space-y-2">
+                <div class="space-y-3">
                     <input v-model="form.email" type="text" name="username" id="username" placeholder="username"
-                        class="block rounded p-1 border">
+                        class="block rounded p-1 border-2 bg-blue-100">
                     <input v-model="form.password" type="password" name="password" id="password" placeholder="*******"
-                        class="block rounded p-1 border">
-                    <button @click="submit" type="submit" class="px-4 py-2 rounded-xl bg-blue-700 text-white font-bold"
+                        class="block rounded p-1 border-2 bg-blue-100">
+                    <div>
+                        <RouterLink :to="{ name: 'login' }"
+                        class="text-white hover:text-blue-200 underline">
+                            Login</RouterLink>
+                    </div>
+                    <button @click="submit" type="submit"
+                        class="px-4 py-1 rounded-xl bg-blue-700 hover:bg-blue-200 text-blue-200 hover:text-blue-700 transition font-bold"
                         :disabled="loading">
                         <span v-if="loading">Loading...</span><span v-else>REGISTER</span>
                     </button>
