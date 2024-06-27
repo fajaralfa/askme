@@ -7,7 +7,7 @@ const props = defineProps({
 })
 
 const { form, loading, submit, status } = useSendQuestion()
-const { user, getUser } = useGetUser()
+const { user, getUser } = useGetUser(props.email)
 
 await getUser()
 
