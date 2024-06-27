@@ -24,7 +24,7 @@ const router = createRouter({
 router.beforeEach((to) => {
     setLoading(true)
     const notGuarded = ['login', 'register', 'ask']
-    if (!isLogin() && !notGuarded.find((v) => v == to.name) ) {
+    if (!isLogin() && !notGuarded.find((v) => v == to.name)) {
         return { name: 'login' }
     } else if (isLogin() && notGuarded.find((v) => v == to.name)) {
         return { name: 'home' }

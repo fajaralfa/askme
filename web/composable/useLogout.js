@@ -8,7 +8,7 @@ export default function useLogout() {
 
     function submit() {
         user.forget()
-        router.push({name: 'login'})
+        router.push({ name: 'login' })
     }
 
     return { submit, loading }

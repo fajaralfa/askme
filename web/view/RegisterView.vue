@@ -16,8 +16,7 @@ const { form, loading, errMessage, submit } = useRegister()
                     <input v-model="form.password" type="password" name="password" id="password" placeholder="*******"
                         class="block rounded p-1 border-2 bg-blue-100">
                     <div>
-                        <RouterLink :to="{ name: 'login' }"
-                        class="text-white hover:text-blue-200 underline">
+                        <RouterLink :to="{ name: 'login' }" class="text-white hover:text-blue-200 underline">
                             Login</RouterLink>
                     </div>
                     <button @click="submit" type="submit"

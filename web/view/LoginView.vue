@@ -16,12 +16,12 @@ const { form, loading, errMessage, submit } = useLogin()
                     <input v-model="form.password" type="password" name="password" id="password" placeholder="*******"
                         class="block rounded p-1 border-2 bg-blue-100">
                     <div>
-                        <RouterLink :to="{ name: 'register' }"
-                        class="text-white hover:text-blue-200 underline">
+                        <RouterLink :to="{ name: 'register' }" class="text-white hover:text-blue-200 underline">
                             Register</RouterLink>
                     </div>
                     <button @click="submit" type="submit"
-                        class="px-4 py-1 rounded-xl bg-blue-700 hover:bg-blue-200 text-blue-200 hover:text-blue-700 transition font-bold" :disabled="loading">
+                        class="px-4 py-1 rounded-xl bg-blue-700 hover:bg-blue-200 text-blue-200 hover:text-blue-700 transition font-bold"
+                        :disabled="loading">
                         <span v-if="loading">Loading...</span><span v-else>LOGIN</span>
                     </button>
                 </div>

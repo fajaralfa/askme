@@ -19,11 +19,11 @@ export default function useRegister() {
         const { json } = await fetchJSON('/api/v1/register', { method: 'post', body: form.value })
         loading.value = false
         if (json.status === 'success') {
-            router.push({name: 'login'})
+            router.push({ name: 'login' })
         } else {
             errMessage.value = json.message
         }
     }
 
-    return {form, loading, errMessage, submit}
+    return { form, loading, errMessage, submit }
 }

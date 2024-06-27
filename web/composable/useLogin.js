@@ -21,11 +21,11 @@ export default function useLogin() {
         loading.value = false
         if (json.status === 'success') {
             user.set(json.data)
-            router.push({name: 'home'})
+            router.push({ name: 'home' })
         } else {
             errMessage.value = json.message
         }
     }
 
-    return {form, loading, errMessage, submit}
+    return { form, loading, errMessage, submit }
 }
