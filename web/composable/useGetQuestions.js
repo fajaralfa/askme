@@ -8,8 +8,10 @@ export default function useGetQuestions() {
     const fetchStatus = ref("success")
     
     async function fetchQuestions() {
+        loading.value = true
         const {json} = await fetchJSONWithAuth('/api/v1/questions', user.get().value.accessToken)
         fetchStatus.value = json.status
+        loading.value = false
         if (json.status === 'success') {
             questions.value = json.data.questions
         }
