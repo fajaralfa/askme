@@ -5,34 +5,22 @@ import QuestionModal from '@/component/QuestionModal.vue'
 import LogoutButton from '@/component/LogoutButton.vue'
 import InboxNew from '@/icon/InboxNew.vue';
 import Inbox from '@/icon/Inbox.vue';
-import { ref } from 'vue';
-import { fetchJSONWithAuth } from '@/helper/fetch';
-import * as user from '@/store/userStore'
+import useSeeQuestion from '@/composable/useSeeQuestion';
 
-const {questions, fetchQuestions, fetchStatus} = useGetQuestions()
+const {questions, fetchQuestions, fetchStatus, loading} = useGetQuestions()
+const { question, showModal, seeQuestion } = useSeeQuestion()
 
-await fetchQuestions()
-
-const question = ref('')
-const see = ref(false)
-async function seeQuestion(item) {
-    if (!item.seen) {
-        await fetchJSONWithAuth(`/api/v1/questions/${item.id}`, user.get().value.accessToken) // trigger seen status
-    }
-    question.value = item.question
-    item.seen = true
-    see.value = true
-}
+fetchQuestions()
 
 </script>
 
 <template>
+    <div class="w-[100vw] min-h-[100vh] place-items-center fixed bg-gradient-to-br from-blue-400 to-blue-600">
     <Nav />
     <LogoutButton />
     <div class="max-w-2xl m-auto">
-        <div class="flex flex-col items-center gap-10 mt-28">
-            <div class="" v-if="questions.length == 0">data kosong!</div>
-        </div>
+        <div v-if="questions.length == 0 && loading == false" class="text-white">data kosong!</div>
+        <div v-if="loading">Mengambil data...</div>
         <div v-if="fetchStatus === 'success'" class="grid grid-cols-3 gap-5 place-items-center p-10">
             <button v-for="item in questions" @click="seeQuestion(item)" class="bg-blue-300 rounded-3xl">
                 <Inbox v-if="item.seen" class="h-24 w-24" />
@@ -40,5 +28,6 @@ async function seeQuestion(item) {
             </button>
         </div>
     </div>
-    <QuestionModal title="Ask Me Anything!" :question :show="see" @show="(e) => see=e" />
+    <QuestionModal title="Ask Me Anything!" :question :show="showModal" @show="(e) => showModal=e" />
+    </div>
 </template>
