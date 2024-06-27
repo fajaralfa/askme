@@ -1,8 +1,8 @@
 import { ref } from "vue"
 
-export const loadingPageStore = ref(false)
+const loadingPageStore = ref(false)
 
-export function isLoading() {
+function isLoading() {
     return loadingPageStore
 }
 
@@ -10,6 +10,8 @@ export function isLoading() {
  * 
  * @param {boolean} to 
  */
-export function setLoading(to) {
+function setLoading(to) {
     loadingPageStore.value = to
 }
+
+export { isLoading, setLoading }
